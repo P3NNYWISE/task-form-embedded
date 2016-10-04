@@ -6,11 +6,29 @@
 
   <div class="col-xs-10">
   
-  <!-- Client Borrower -->
+  <!-- Client Type -->
     <div class="form-group">
-  <label for="clientBorrowerSelect">Users</label>
-		<select  name ="clientBorrowerSelect" ng-model="selectedClient">
-         <option ng-repeat="client in clients" value="{{client.name}}">{{client.name}}</option>
+  <label for="clientTypeSelect">Client Type</label>
+		<select  name ="clientTypeSelect" ng-model="selectedClientType">
+         <option ng-repeat="type in clientsType" value="{{type.name}}">{{type.name}}</option>
+     </select>  
+  
+   </div> 
+   
+     <!-- Client Group -->
+    <div class="form-group">
+  <label for="clientGroupSelect">Client Group</label>
+		<select  name ="clientGroupSelect" ng-model="selectedClientGroup">
+         <option ng-repeat="group in clientGroup" value="{{group.name}}">{{group.name}}</option>
+     </select>  
+  
+   </div> 
+  
+       <!-- Batch Process -->
+    <div class="form-group">
+  <label for="batchProcessSelect">Batch Process</label>
+		<select  name ="batchProcessSelect" ng-model="selectedBatchProcess">
+         <option ng-repeat="process in batchProcess" value="{{process.name}}">{{process.name}}</option>
      </select>  
   
    </div> 
@@ -59,9 +77,9 @@
   
 </p>
     <!-- Payment Date -->
-    <label for="premiumRequestAnticipatedPayDate">Payment Date</label>
+    
   <div class="input-group">
-  
+  <label for="premiumRequestAnticipatedPayDate">Payment Date</label>
   
   <input type="text"
        cam-variable-name="premiumRequestAnticipatedPayDate"
@@ -93,6 +111,8 @@
 
 
     </div>
+    
+
 
 
 
@@ -129,7 +149,12 @@
   };
 
 //
-	$scope.clients=[{"name":"foo"},{"name":"bar"}];
+	$scope.clientsType=[{"name":"3rd Party"},{"name":"NCB"},{"name":"Policies"}];
+	$scope.clientGroup=[{"name":"foo"},{"name":"bar"},{"name":"extra"}];
+	$scope.batchProcess=[{"name":"Fortres"},{"name":"Centurion"},{"name":"etc"}];
+
+
+
 
     </script>
 
