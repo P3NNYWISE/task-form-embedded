@@ -1,0 +1,146 @@
+<h3>Start Request Cycle</h3>
+<form role="form"
+      name="PremiumRequestForm">
+      
+      <div class="row">
+
+  <div class="col-xs-10">
+  
+  <!-- Client Borrower -->
+    <div class="form-group">
+  <label for="clientBorrowerSelect">Users</label>
+		<select  name ="clientBorrowerSelect" ng-model="selectedClient">
+         <option ng-repeat="client in clients" value="{{client.name}}">{{client.name}}</option>
+     </select>  
+  
+   </div> 
+  
+
+    <!-- from date -->
+    <label for="premiumRequestPaymentDate">From</label>
+  <p class="input-group">  
+  <input type="text"
+       cam-variable-name="premiumRequestPaymentDate"
+       cam-variable-type="Date"
+       class="form-control"
+       datepicker-popup="MM/dd/yyyy"
+       placeholder="mm/dd/yyyy"
+       is-open="fromdateFieldOpened" />
+
+  <span class="input-group-btn">
+    <button type="button"
+            class="btn btn-default"
+            ng-click="from_open($event)">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+  </span>
+  
+</p>
+    <!-- to date -->
+    <label for="premiumRequestToDate">To</label>
+  <p class="input-group">
+  
+  
+  <input type="text"
+       cam-variable-name="premiumRequestToDate"
+       cam-variable-type="Date"
+       class="form-control"
+       datepicker-popup="MM/dd/yyyy"
+       placeholder="mm/dd/yyyy"
+       is-open="todateFieldOpened" />
+
+  <span class="input-group-btn">
+    <button type="button"
+            class="btn btn-default"
+            ng-click="to_open($event)">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+  </span>
+  
+</p>
+    <!-- Payment Date -->
+    <label for="premiumRequestAnticipatedPayDate">Payment Date</label>
+  <div class="input-group">
+  
+  
+  <input type="text"
+       cam-variable-name="premiumRequestAnticipatedPayDate"
+       cam-variable-type="Date"
+       class="form-control"
+       datepicker-popup="MM/dd/yyyy"
+       placeholder="mm/dd/yyyy"
+       is-open="paymentdateFieldOpened" />
+
+  <span class="input-group-btn">
+    <button type="button"
+            class="btn btn-default"
+            ng-click="payment_open($event)">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+  </span>
+  
+</div>
+
+
+  <div class="form-group">
+    <label for="check_as_pdf">Present Checks As PDFs</label>
+	<input type="checkbox"
+       cam-variable-name="check_as_pdf"
+       cam-variable-type="Boolean" />
+
+ </div>
+
+
+
+    </div>
+
+
+
+    <!-- The following code demonstrates use of custom scripting.
+
+          The 'cam-script' directive makes sure the the script is loaded and can bind to the angular $scope for the form.
+
+          Access to form fields is provided through $scope.variablesForm.
+       -->
+    <script cam-script type="text/form-script">
+//Angular Datepicker
+ $scope.from_open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+	
+	if (!$scope.activeDatePicker) { 
+    	$scope.fromdateFieldOpened = true;
+		$scope.activeDatePicker=true
+	}
+  };
+ $scope.to_open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+	
+
+    $scope.todateFieldOpened = true;
+  };
+ $scope.payment_open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+	
+
+    $scope.paymentdateFieldOpened = true;
+  };
+
+//
+	$scope.clients=[{"name":"foo"},{"name":"bar"}];
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</form>
