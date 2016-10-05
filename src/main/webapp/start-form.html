@@ -1,37 +1,52 @@
-<h3>Start Request Cycle</h3>
-<form role="form"
-      name="PremiumRequestForm">
-      
-      <div class="row">
 
-  <div class="col-xs-10">
-  
+<form role="form" name="PremiumRequestForm">
+      
+
   <!-- Client Type -->
     <div class="form-group">
   <label for="clientTypeSelect">Client Type</label>
-		<select  name ="clientTypeSelect" ng-model="selectedClientType">
-         <option ng-repeat="type in clientsType" value="{{type.name}}">{{type.name}}</option>
+		<select   name ="clientTypeSelect" 
+		ng-model="selectedClientType"
+		ng-options="type.name for type in clientsType">
+		
+         <!--   <option ng-repeat="type in clientsType" value="{{type.name}}">{{type.name}}</option>-->
      </select>  
+   </div>
+   <div class="form-group">
+ <select class="my_select_box" data-placeholder="Select Your Options">
+    <option value="1">Option 1</option>
+    <option value="2" selected>Option 2</option>
+    <option value="3" disabled>Option 3</option>
+  </select>
+</div>
   
-   </div> 
-   
-     <!-- Client Group -->
+  
+       <!-- Client Group -->
     <div class="form-group">
   <label for="clientGroupSelect">Client Group</label>
-		<select  name ="clientGroupSelect" ng-model="selectedClientGroup">
-         <option ng-repeat="group in clientGroup" value="{{group.name}}">{{group.name}}</option>
+		<select  name ="clientGroupSelect" ng-model="selectedClientGroup"
+		   ng-options="group.name for group in clientGroup">
+		   <option value=""> -Select One Option- </option>
+         
      </select>  
-  
-   </div> 
-  
-       <!-- Batch Process -->
+      </div>
+
+
+   
+   
+ <!-- Payment Agent -->
     <div class="form-group">
-  <label for="batchProcessSelect">Batch Process</label>
-		<select  name ="batchProcessSelect" ng-model="selectedBatchProcess">
-         <option ng-repeat="process in batchProcess" value="{{process.name}}">{{process.name}}</option>
+  <label for="paymentAgentSelect">Payment Agent</label>
+		<select  name ="paymentAgentSelect" ng-model="selectedPaymentAgent"
+		ng-options="agent.name for agent in paymentAgents">
+		<option value=""> -Select One Option- </option>
+         
      </select>  
   
-   </div> 
+   </div>
+   
+
+
   
 
     <!-- from date -->
@@ -54,6 +69,7 @@
   </span>
   
 </p>
+
     <!-- to date -->
     <label for="premiumRequestToDate">To</label>
   <p class="input-group">
@@ -76,12 +92,34 @@
   </span>
   
 </p>
-    <!-- Payment Date -->
-    
-  <div class="input-group">
-  <label for="premiumRequestAnticipatedPayDate">Payment Date</label>
+
   
-  <input type="text"
+       <!-- Batch Process -->
+    <div class="form-group">
+  <label for="batchProcessSelect">Batch Process</label>
+		<select  name ="batchProcessSelect" ng-model="selectedBatchProcess">
+         <option ng-repeat="process in batchProcess" value="{{process.name}}">{{process.name}}</option>
+         <option value=""> -Select One Option- </option>
+     </select>  
+  
+   </div> 
+  
+  <!-- Separated Groups -->
+  <div class="form-group">
+  <label for="separateGroupSelect">Separate Group</label>
+		<select  name ="separateGroupSelect" ng-model="selectedSeparateGroup"
+		ng-options="group.name for group in separateGroups">
+		<option value=""> -Select One Option- </option>
+         <!--  <option ng-repeat="group in separateGroups" value="{{group.name}}">{{group.name}}</option>-->
+     </select>  
+  
+   </div> 
+
+<!-- Payment Date -->
+  
+<label for="premiumRequestAnticipatedPayDate">Payment Date</label>  
+ <p class="input-group">
+  	<input type="text"
        cam-variable-name="premiumRequestAnticipatedPayDate"
        cam-variable-type="Date"
        class="form-control"
@@ -89,15 +127,14 @@
        placeholder="mm/dd/yyyy"
        is-open="paymentdateFieldOpened" />
 
-  <span class="input-group-btn">
-    <button type="button"
+  	<span class="input-group-btn">
+    	<button type="button"
             class="btn btn-default"
             ng-click="payment_open($event)">
-      <i class="glyphicon glyphicon-calendar"></i>
-    </button>
-  </span>
-  
-</div>
+      	<i class="glyphicon glyphicon-calendar"></i>
+    	</button>
+  	</span>
+</p>
 
 
   <div class="form-group">
@@ -110,7 +147,7 @@
 
 
 
-    </div>
+    
     
 
 
@@ -123,6 +160,10 @@
           Access to form fields is provided through $scope.variablesForm.
        -->
     <script cam-script type="text/form-script">
+
+$(".my_select_box").chosen();
+
+
 //Angular Datepicker
  $scope.from_open = function($event) {
     $event.preventDefault();
@@ -148,10 +189,15 @@
     $scope.paymentdateFieldOpened = true;
   };
 
-//
+//Datos que deberian venir desde la APi
 	$scope.clientsType=[{"name":"3rd Party"},{"name":"NCB"},{"name":"Policies"}];
+ 	$scope.selectedClientType = $scope.clientsType[0];
 	$scope.clientGroup=[{"name":"foo"},{"name":"bar"},{"name":"extra"}];
 	$scope.batchProcess=[{"name":"Fortres"},{"name":"Centurion"},{"name":"etc"}];
+
+	$scope.paymentAgents=[{"name":"NorthStar"},{"name":"Wells Fargo"},{"name":"Us Bank"}];
+	$scope.separateGroups=[{"name":"1 Payment File"},{"name":"4 Payment File"}];
+	$scope.selectedSeparateGroup = $scope.separateGroups[0];
 
 
 
@@ -169,3 +215,4 @@
 
 
 </form>
+
