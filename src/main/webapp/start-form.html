@@ -2,49 +2,51 @@
 <form role="form" name="PremiumRequestForm">
       
 
-  <!-- Client Type -->
-    <div class="form-group">
-  <label for="clientTypeSelect">Client Type</label>
-		<select   name ="clientTypeSelect" 
-		ng-model="selectedClientType"
-		ng-options="type.name for type in clientsType">
+<!-- Client Type -->
+<div class="form-group row">
+  <label class= "col-sm-2" for="clientTypeSelect">Client Type</label>
+  <div class="col-sm-10">
+		<select  chosen class="select_box" id ="client_type_select_box" name ="clientTypeSelect"  
+		ng-model="selectedClientType">
+		<!--   ng-options="type.name for type in clientsType" -->  
+
+    	
+	<option ng-repeat="type in clientsType" value="{{type.name}}">{{type.name}}</option>
 		
-         <!--   <option ng-repeat="type in clientsType" value="{{type.name}}">{{type.name}}</option>-->
-     </select>  
-   </div>
-   <div class="form-group">
- <select class="my_select_box" data-placeholder="Select Your Options">
-    <option value="1">Option 1</option>
-    <option value="2" selected>Option 2</option>
-    <option value="3" disabled>Option 3</option>
-  </select>
-</div>
+     </select>
+   </div>  
+</div>     
+
+    
   
   
-       <!-- Client Group -->
-    <div class="form-group">
-  <label for="clientGroupSelect">Client Group</label>
-		<select  name ="clientGroupSelect" ng-model="selectedClientGroup"
+<!-- Client Group -->
+<div class="form-group row">
+  <label class= "col-sm-2" for="clientGroupSelect">Client Group</label>
+  <div class="col-sm-10">
+		<select  chose class="select_box" name ="clientGroupSelect" ng-model="selectedClientGroup"
 		   ng-options="group.name for group in clientGroup">
-		   <option value=""> -Select One Option- </option>
+		   <option value=""> -Select one option- </option>
          
      </select>  
       </div>
+</div>    
 
 
    
    
  <!-- Payment Agent -->
-    <div class="form-group">
-  <label for="paymentAgentSelect">Payment Agent</label>
-		<select  name ="paymentAgentSelect" ng-model="selectedPaymentAgent"
+    <div class="form-group row">
+  <label class= "col-sm-2" for="paymentAgentSelect">Payment Agent</label>
+  <div class="col-sm-10">
+		<select chosen class="select_box" name ="paymentAgentSelect" ng-model="selectedPaymentAgent"
 		ng-options="agent.name for agent in paymentAgents">
-		<option value=""> -Select One Option- </option>
+		<option value=""> -Select one option- </option>
          
      </select>  
   
    </div>
-   
+ </div>      
 
 
   
@@ -62,7 +64,7 @@
 
   <span class="input-group-btn">
     <button type="button"
-            class="btn btn-default"
+            class="btn btn-default"	
             ng-click="from_open($event)">
       <i class="glyphicon glyphicon-calendar"></i>
     </button>
@@ -99,7 +101,7 @@
   <label for="batchProcessSelect">Batch Process</label>
 		<select  name ="batchProcessSelect" ng-model="selectedBatchProcess">
          <option ng-repeat="process in batchProcess" value="{{process.name}}">{{process.name}}</option>
-         <option value=""> -Select One Option- </option>
+         <option value=""> -Select one option- </option>
      </select>  
   
    </div> 
@@ -109,7 +111,7 @@
   <label for="separateGroupSelect">Separate Group</label>
 		<select  name ="separateGroupSelect" ng-model="selectedSeparateGroup"
 		ng-options="group.name for group in separateGroups">
-		<option value=""> -Select One Option- </option>
+		<option value=""> -Select one option- </option>
          <!--  <option ng-repeat="group in separateGroups" value="{{group.name}}">{{group.name}}</option>-->
      </select>  
   
@@ -145,14 +147,6 @@
 
  </div>
 
-
-
-    
-    
-
-
-
-
     <!-- The following code demonstrates use of custom scripting.
 
           The 'cam-script' directive makes sure the the script is loaded and can bind to the angular $scope for the form.
@@ -161,14 +155,18 @@
        -->
     <script cam-script type="text/form-script">
 
-$(".my_select_box").chosen();
+	//Jquery Chosen Plugin
+		$(".select_box").chosen({ width: "50%",
+    		disable_search_threshold: 2,
+    		no_results_text: "Oops, nothing found!",
+		});
+	
 
 
 //Angular Datepicker
  $scope.from_open = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-	
 	if (!$scope.activeDatePicker) { 
     	$scope.fromdateFieldOpened = true;
 		$scope.activeDatePicker=true
@@ -176,29 +174,58 @@ $(".my_select_box").chosen();
   };
  $scope.to_open = function($event) {
     $event.preventDefault();
-    $event.stopPropagation();
-	
-
+    $event.stopPropagation();	
     $scope.todateFieldOpened = true;
   };
  $scope.payment_open = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-	
-
     $scope.paymentdateFieldOpened = true;
   };
 
 //Datos que deberian venir desde la APi
-	$scope.clientsType=[{"name":"3rd Party"},{"name":"NCB"},{"name":"Policies"}];
- 	$scope.selectedClientType = $scope.clientsType[0];
+	
+ 	
 	$scope.clientGroup=[{"name":"foo"},{"name":"bar"},{"name":"extra"}];
 	$scope.batchProcess=[{"name":"Fortres"},{"name":"Centurion"},{"name":"etc"}];
-
 	$scope.paymentAgents=[{"name":"NorthStar"},{"name":"Wells Fargo"},{"name":"Us Bank"}];
 	$scope.separateGroups=[{"name":"1 Payment File"},{"name":"4 Payment File"}];
 	$scope.selectedSeparateGroup = $scope.separateGroups[0];
 
+
+	$scope.clientsType =  [{"name":"3rd Party"},{"name":"NCB"},{"name":"Policies"}];	
+
+	
+	
+// APIs Calls
+ inject([ '$scope', '$http', function($scope, $http) {
+      camForm.on('form-loaded', function() {
+        // use injected $http service for making requests
+
+		var url = "https://api-ak.wunderground.com/api/606f3f6977348613/history_2016012320160131/units:metric/v:2.0/q/pws:KNYNEWYO395.json?format=jsonp&callback=JSON_CALLBACK" ;
+   
+		//API Call
+  		$scope.getClientsType = function() {		
+	   		$http.jsonp(url)
+    			.success(function (data ,status , header , conf) {
+					console.log(data);
+					$scope.clientsType =  data.response;
+					
+					//Jquery Update chosen select
+					console.log($scope.clientsType);
+					for (x in $scope.clientsType){
+        			   $("#client_type_select_box").prepend("<option>"+x.name+"</option>");
+				}
+				
+				
+					$(".select_box").trigger("chosen:updated");
+	    	});
+		}	
+		$scope.getClientsType();
+
+
+      });
+    }]);
 
 
 
